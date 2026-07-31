@@ -47,9 +47,7 @@ export class BrandsService {
 
 
   async findAll(): Promise<Brand[]> {
-
     return this.brandRepository.find();
-
   }
 
 
@@ -86,6 +84,28 @@ export class BrandsService {
   ): Promise<void> {
 
     await this.brandRepository.delete(id);
+
+  }
+
+
+  async findOneOrFail(
+    id: string,
+  ): Promise<Brand> {
+
+    const brand =
+      await this.brandRepository.findOne({
+        where: {
+          id,
+        },
+      });
+
+    if (!brand) {
+      throw new NotFoundException(
+        'Marca no encontrada',
+      );
+    }
+
+    return brand;
 
   }
 

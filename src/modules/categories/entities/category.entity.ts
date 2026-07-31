@@ -4,7 +4,9 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { Instrument } from '../../instruments/entities/instrument.entity';
 
 @Entity('categories')
 export class Category {
@@ -27,6 +29,12 @@ export class Category {
     nullable: true,
   })
   description?: string;
+
+  @OneToMany(
+    () => Instrument,
+    (instrument) => instrument.category
+  )
+  instrument: Instrument[];
 
 
   @CreateDateColumn()

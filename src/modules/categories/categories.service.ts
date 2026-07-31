@@ -134,6 +134,26 @@ export class CategoriesService {
     await this.categoryRepository.remove(
       category,
     );
+  }
+
+  async findOneOrFail(
+    id: string,
+  ): Promise<Category> {
+
+    const category =
+      await this.categoryRepository.findOne({
+        where: {
+          id,
+        },
+      });
+
+    if (!category) {
+      throw new NotFoundException(
+        'Categoría no encontrada',
+      );
+    }
+
+    return category;
 
   }
 
